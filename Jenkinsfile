@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Byggsteget körs...........'
+                echo 'Byggsteget körs......'
                 echo 'Här skulle din byggprocess normalt köras, till exempel: mvn clean install'
             }
         }
