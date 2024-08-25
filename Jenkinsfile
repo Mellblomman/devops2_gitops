@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Klonar ditt repository
-                git branch: 'main', url: 'https://github.com/your-repo-url.git'
+                git branch: 'dev', url: 'https://github.com/Mellblomman/devops2-gitops.git'
             }
         }
         stage('Build') {
