@@ -33,7 +33,7 @@ SELECT bi.*, c.price
 FROM bookinginformation bi
 JOIN court c ON bi.activity = c.activity;
 
-INSERT INTO inloggningsuppgifter (email, password) VALUES ('admin@gmail.com', 'abc123', '1234567890', 'TRUE');
+INSERT INTO inloggningsuppgifter (email, password, phone, admin) VALUES ('admin@gmail.com', 'abc123', '1234567890', 'TRUE');
 INSERT INTO court (activity, price) VALUES ('Tennis', '300');
 INSERT INTO contact_messages (email, phone, message) VALUES ('test@example.com', '1234567890', 'Do we have any A-ARON IN THE CLASS?');
 
