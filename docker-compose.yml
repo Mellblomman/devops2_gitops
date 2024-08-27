@@ -1,0 +1,73 @@
+# Skriv detta i terminalen:
+# docker-compose up -d 
+
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports: 
+      - "5432:5432"
+    networks:
+    - sportcenter-network
+
+  booking:
+    build:
+      context: ./devops2be-bookings
+      dockerfile: Dockerfile
+    container_name: cont_bookings
+    ports:
+      - "5004:5004"
+    networks:
+      - sportcenter-network
+    env_file:
+      - .env
+
+  user:
+    build:
+      context: ./devops2be-user
+      dockerfile: Dockerfile
+    container_name: cont_user
+    ports:
+      - "5002:5002"
+    networks:
+      - sportcenter-network
+    env_file:
+      - .env
+
+  frontend:
+    build:
+      context: ./devops2fe
+      dockerfile: Dockerfile
+    container_name: cont_frontend
+    ports:
+      - "5001:5001"
+    networks:
+      - sportcenter-network
+    env_file:
+      - .env
+
+  contact:
+    build:
+      context: ./devops2be-contacts
+      dockerfile: Dockerfile
+    container_name: cont_contacts
+    ports:
+      - "5003:5003"
+    networks:
+      - sportcenter-network
+    env_file:
+      - .env
+
+networks:
+  sportcenter-network:
+    name: sportcenter-network
+    driver: bridge
+
+volumes:
+  db_data:
