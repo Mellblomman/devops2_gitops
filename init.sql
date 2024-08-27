@@ -20,10 +20,27 @@ CREATE TABLE IF NOT EXISTS bookinginformation (
     PRIMARY KEY(activity, date, time)
 );
 
+CREATE TABLE contact_messages (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE OR REPLACE VIEW user_bookings_view AS
 SELECT bi.*, c.price
 FROM bookinginformation bi
 JOIN court c ON bi.activity = c.activity;
 
-INSERT INTO inloggningsuppgifter (email, password) VALUES ('lukas@hotmail.com', 'abc123');
+INSERT INTO inloggningsuppgifter (email, password) VALUES ('admin@gmail.com', 'abc123', '1234567890', 'TRUE');
 INSERT INTO court (activity, price) VALUES ('Tennis', '300');
+INSERT INTO contact_messages (email, phone, message) VALUES ('test@example.com', '1234567890', 'Do we have any A-ARON IN THE CLASS?');
+
+/* För att logga in på databasen:
+1. docker exec -it devops2-gitops-db-1 bash
+2. psql -U postgres -d postgres
+3. SELECT * FROM contact_messages;
+
+Nu kommer du se alla meddelanden som kunder skriver!
+*/
