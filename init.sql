@@ -42,5 +42,7 @@ INSERT INTO contact_messages (email, phone, message) VALUES ('test@example.com',
 2. psql -U postgres -d postgres
 3. SELECT * FROM contact_messages;
 
+Se alla tabeller med \dt i psql.
+
 Nu kommer du se alla meddelanden som kunder skriver!
 */
