@@ -6,8 +6,8 @@ if [ -f .env ]; then
 fi
 
 # Sätt variabler
-IMAGE_NAME="vedmastaren/devops2be-contacts:latest"
-DOCKERFILE_PATH="./devops2be-contacts"  # Denna ska vara mappen som innehåller Dockerfile
+IMAGE_NAME="vedmastaren/devops2be_contacts:latest"
+DOCKERFILE_PATH="./devops2be_contacts"  # Denna ska vara mappen som innehåller Dockerfile
 DOCKERFILE_NAME="Dockerfile"  # Ange namnet på Dockerfile om det inte heter Dockerfile
 
 # Logga in på Docker Hub
