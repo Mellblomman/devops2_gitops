@@ -17,7 +17,7 @@ services:
     - sportcenter-network
 
   booking:
-    image: vedmastaren/devops2be-bookings:latest  # Använd förbyggd bild
+    image: vedmastaren/devops2be_bookings:latest  # Använd förbyggd bild
     container_name: cont_bookings
     ports:
       - "5004:5004"
@@ -27,7 +27,7 @@ services:
       - .env
 
   user:
-    image: vedmastaren/devops2be-user:latest  # Använd förbyggd bild
+    image: vedmastaren/devops2be_user:latest  # Använd förbyggd bild
     container_name: cont_user
     ports:
       - "5002:5002"
@@ -35,7 +35,7 @@ services:
       - sportcenter-network
     env_file:
       - .env
-
+      
   frontend:
     image: vedmastaren/devops2fe:latest  # Använd förbyggd bild
     container_name: cont_frontend
@@ -47,7 +47,7 @@ services:
       - .env
 
   contact:
-    image: vedmastaren/devops2be-contacts:latest  # Använd förbyggd bild
+    image: vedmastaren/devops2be_contacts:latest  # Använd förbyggd bild
     container_name: cont_contacts
     ports:
       - "5003:5003"
