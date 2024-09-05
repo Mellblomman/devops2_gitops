@@ -1,0 +1,239 @@
+# kubectl apply -f kubernetes.yaml (vi ändringar kör denna)
+# kubectl get pods 
+# kubectl get services 
+# kubectl get deployments 
+
+# PersistentVolumeClaim för PostgreSQL
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Deployment och Service för PostgreSQL
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: Mydatabase1391
+            - name: POSTGRES_DB
+              value: postgres
+          volumeMounts:
+            - name: db-storage
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db-pvc
+        - name: init-sql
+          configMap:
+            name: postgres-init-sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+---
+# Deployment och Service för Booking
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booking
+  template:
+    metadata:
+      labels:
+        app: booking
+    spec:
+      containers:
+        - name: booking
+          image: vedmastaren/devops2be_bookings:latest
+          ports:
+            - containerPort: 5004
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_USER
+              value: postgres
+            - name: DATABASE_PASSWORD
+              value: Mydatabase1391
+            - name: DATABASE_NAME
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking
+spec:
+  ports:
+    - port: 5004
+      targetPort: 5004
+  selector:
+    app: booking
+---
+# Deployment och Service för User
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: vedmastaren/devops2be_user:latest
+          ports:
+            - containerPort: 5002
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_USER
+              value: postgres
+            - name: DATABASE_PASSWORD
+              value: Mydatabase1391
+            - name: DATABASE_NAME
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+spec:
+  ports:
+    - port: 5002
+      targetPort: 5002
+  selector:
+    app: user
+---
+# Deployment och Service för Frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: vedmastaren/devops2fe:latest
+          ports:
+            - containerPort: 5001
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_USER
+              value: postgres
+            - name: DATABASE_PASSWORD
+              value: Mydatabase1391
+            - name: DATABASE_NAME
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+    - port: 5001
+      targetPort: 5001
+  selector:
+    app: frontend
+---
+# Deployment och Service för Contact
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contact
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contact
+  template:
+    metadata:
+      labels:
+        app: contact
+    spec:
+      containers:
+        - name: contact
+          image: vedmastaren/devops2be_contacts:latest
+          ports:
+            - containerPort: 5003
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: DATABASE_USER
+              value: postgres
+            - name: DATABASE_PASSWORD
+              value: Mydatabase1391
+            - name: DATABASE_NAME
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact
+spec:
+  ports:
+    - port: 5003
+      targetPort: 5003
+  selector:
+    app: contact
