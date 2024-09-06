@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Ladda miljövariabler från .env fil
+echo "Laddar miljövariabler från .env-fil..."
+source .env
+
 # Starta Minikube
 echo "Startar Minikube..."
 minikube start
