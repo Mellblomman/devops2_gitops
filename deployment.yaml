@@ -37,11 +37,21 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_USER
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
-              value: Mydatabase1391
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_DB
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: POSTGRES_DB
+
           volumeMounts:
             - name: db-storage
               mountPath: /var/lib/postgresql/data
@@ -83,7 +93,7 @@ spec:
     spec:
       containers:
         - name: booking
-          image: vedmastaren/devops2be_bookings:latest
+          image: enkas1/devops2be_bookings:latest
           ports:
             - containerPort: 5004
           env:
@@ -126,7 +136,7 @@ spec:
     spec:
       containers:
         - name: user
-          image: vedmastaren/devops2be_user:latest
+          image: enkas1/devops2be_user:latest
           ports:
             - containerPort: 5002
           env:
@@ -169,7 +179,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: vedmastaren/devops2fe:latest
+          image: enkas1/devops2fe:latest
           ports:
             - containerPort: 5001
           env:
@@ -212,7 +222,7 @@ spec:
     spec:
       containers:
         - name: contact
-          image: vedmastaren/devops2be_contacts:latest
+          image: enkas1/devops2be_contacts:latest
           ports:
             - containerPort: 5003
           env:
