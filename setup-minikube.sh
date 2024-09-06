@@ -15,7 +15,7 @@ kubectl apply -f postgres-init-configmap.yaml -n sportcenter
 
 # Skapa Secret för databasuppgifter
 echo "Skapar Secret för databasens inloggning..."
-kubectl create secret generic db-secret --from-literal=POSTGRES_USER=${POSTGRES_USER} --from-literal=POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --from-literal=POSTGRES_DB=${POSTGRES_DB}
+kubectl create secret generic db-secret -n sportcenter --from-literal=POSTGRES_USER=${POSTGRES_USER} --from-literal=POSTGRES_PASSWORD=${POSTGRES_PASSWORD} --from-literal=POSTGRES_DB=${POSTGRES_DB}
 
 
 # Kontrollera status för resurser
