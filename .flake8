@@ -1,0 +1,6 @@
+[flake8]
+# Ignorera regler för whitespace-varningar
+ignore = W291, W293, W391
+
+# Maximalt antal tecken per rad (ändra vid behov)
+max-line-length = 155
