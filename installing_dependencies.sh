@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Skapa en docker container med Jenkins
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+
 # Logga in i Jenkins Docker-container som root-användare
 CONTAINER_NAME="jenkins"
 docker exec -u 0 -it $CONTAINER_NAME bash -c "
