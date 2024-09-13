@@ -1,5 +1,5 @@
 .env
-./devops2be-bookings
-./devops2be-contacts
-./devops2be.user
+./devops2be_bookings
+./devops2be_contacts
+./devops2be_user
 ./devops2fe

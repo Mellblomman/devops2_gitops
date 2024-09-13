@@ -17,9 +17,7 @@ services:
     - sportcenter-network
 
   booking:
-    build:
-      context: ./devops2be-bookings
-      dockerfile: Dockerfile
+    image: vedmastaren/devops2be_bookings:latest  # Använd förbyggd bild
     container_name: cont_bookings
     ports:
       - "5004:5004"
@@ -29,9 +27,7 @@ services:
       - .env
 
   user:
-    build:
-      context: ./devops2be-user
-      dockerfile: Dockerfile
+    image: vedmastaren/devops2be_user:latest  # Använd förbyggd bild
     container_name: cont_user
     ports:
       - "5002:5002"
@@ -39,11 +35,9 @@ services:
       - sportcenter-network
     env_file:
       - .env
-
+      
   frontend:
-    build:
-      context: ./devops2fe
-      dockerfile: Dockerfile
+    image: vedmastaren/devops2fe:latest  # Använd förbyggd bild
     container_name: cont_frontend
     ports:
       - "5001:5001"
@@ -53,9 +47,7 @@ services:
       - .env
 
   contact:
-    build:
-      context: ./devops2be-contacts
-      dockerfile: Dockerfile
+    image: vedmastaren/devops2be_contacts:latest  # Använd förbyggd bild
     container_name: cont_contacts
     ports:
       - "5003:5003"
